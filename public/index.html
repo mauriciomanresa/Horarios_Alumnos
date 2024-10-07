@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda de Clases</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1>-- Profe TERRA --</h1>
+      <h2>Profesora de Matemáticas, Física y Química ... Gabriela N. TERRA</h2>
+    </header>
+    <main class="campo">
+      <h1>Selecciona tu horario para las clases</h1>
+      <form id="scheduleForm" method="POST" action="/submit_schedule">
+        <table>
+          <thead>
+            <tr>
+              <th>Horario</th>
+              <th>Lunes</th>
+              <th>Martes</th>
+              <th>Miércoles</th>
+              <th>Jueves</th>
+              <th>Viernes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>15:00 - 16:00</td>
+              <td>
+                <input type="radio" name="dia_hora" value="lunes_15:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="martes_15:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="miercoles_15:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="jueves_15:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="viernes_15:00" />
+              </td>
+            </tr>
+            <tr>
+              <td>16:00 - 17:00</td>
+              <td>
+                <input type="radio" name="dia_hora" value="lunes_16:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="martes_16:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="miercoles_16:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="jueves_16:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="viernes_16:00" />
+              </td>
+            </tr>
+            <tr>
+              <td>17:00 - 18:00</td>
+              <td>
+                <input type="radio" name="dia_hora" value="lunes_17:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="martes_17:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="miercoles_17:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="jueves_17:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="viernes_17:00" />
+              </td>
+            </tr>
+            <tr>
+              <td>18:00 - 19:00</td>
+              <td>
+                <input type="radio" name="dia_hora" value="lunes_18:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="martes_18:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="miercoles_18:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="jueves_18:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="viernes_18:00" />
+              </td>
+            </tr>
+            <tr>
+              <td>19:00 - 20:00</td>
+              <td>
+                <input type="radio" name="dia_hora" value="lunes_19:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="martes_19:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="miercoles_19:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="jueves_19:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="viernes_19:00" />
+              </td>
+            </tr>
+            <tr>
+              <td>20:00 - 21:00</td>
+              <td>
+                <input type="radio" name="dia_hora" value="lunes_20:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="martes_20:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="miercoles_20:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="jueves_20:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="viernes_20:00" />
+              </td>
+            </tr>
+            <tr>
+              <td>21:00 - 22:00</td>
+              <td>
+                <input type="radio" name="dia_hora" value="lunes_21:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="martes_21:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="miercoles_21:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="jueves_21:00" />
+              </td>
+              <td>
+                <input type="radio" name="dia_hora" value="viernes_21:00" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div id="modal" class="modal" style="display: none">
+          <h2>Ingresa los datos del alumno</h2>
+          <label for="nombreAlumno">Nombre del Alumno:</label>
+          <input type="text" id="nombreAlumno" name="nombreAlumno" required />
+          <br /><br />
+          <label for="nombrePadre">Nombre del Padre/Madre:</label>
+          <input type="text" id="nombrePadre" name="nombrePadre" required />
+          <br /><br />
+          <button type="button" id="closeModal">Cancelar</button>
+          <button type="submit">Confirmar</button>
+        </div>
+
+        <div
+          id="modalOverlay"
+          class="modal-overlay"
+          style="display: none"
+        ></div>
+      </form>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>
+
+<!-- http://localhost:3000/admin?password=key123 -->

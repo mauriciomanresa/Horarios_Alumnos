@@ -1,0 +1,34 @@
+body {
+  background-color: rgb(211, 215, 215);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.botonEdit,
+.botonDelete {
+  box-sizing: border-box;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-radius: 10px;
+  margin: 0 10px;
+}
+
+.botonEdit:hover {
+  background-color: rgb(132, 244, 20);
+  box-shadow: 3px 3px 5px;
+}
+
+.botonDelete:hover {
+  background-color: rgb(249, 18, 14);
+  box-shadow: 3px 3px 5px;
+}
