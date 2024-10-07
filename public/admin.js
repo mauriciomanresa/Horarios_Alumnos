@@ -142,3 +142,7 @@ const socket = io(); // Conecto al Socket.IO
 socket.on("update", () => {
   location.reload();
 });
+
+// Script salida
+document.getElementById("btnSalir").addEventListener("click", () => {
+  window.location.href = "salida.html"; });

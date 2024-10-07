@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(45deg, #07fbd6, #05ac66);        
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay; 
+}
+
+.container {
+    text-align: center;
+    color: white;
+    text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.8);
+}
+
+h1 {
+    font-size: 3em;
+}
+
+h2 {
+    font-size: 2em;
+    margin-top: 30px;
+}
+
+p {
+    font-size: 1.5em;
+    margin-top: 20px;
+}

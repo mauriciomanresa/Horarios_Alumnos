@@ -11,12 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.appendChild(loadingIndicator);
 
   // Deshabilito horarios reservados
-  function disableBookedSlots() {
+  async function disableBookedSlots() {
     const radios = form.querySelectorAll('input[name="dia_hora"]');
     loadingIndicator.style.display = "block";
+
     const requests = [];
 
-    radios.forEach((radio) => {
+    for (const radio of radios) {
       const value = radio.value;
       const request = fetch(`/check_availability?dia_hora=${value}`)
         .then((response) => response.json())
@@ -33,20 +34,18 @@ document.addEventListener("DOMContentLoaded", () => {
           console.error("Error al verificar disponibilidad:", error);
         });
       requests.push(request);
-    });
+    }
 
-    Promise.all(requests).finally(() => {
-      loadingIndicator.style.display = "none";
-    });
+    await Promise.all(requests);
+    loadingIndicator.style.display = "none";
   }
 
   disableBookedSlots();
 
-  // Muestro el modal al seleccionar horario
+  // Mostrar modal al seleccionar horario
   const radios = form.querySelectorAll('input[name="dia_hora"]');
   radios.forEach((radio) => {
     radio.addEventListener("change", () => {
-      // Limpio los campos
       document.getElementById("nombreAlumno").value = "";
       document.getElementById("nombrePadre").value = "";
       modal.style.display = "block";
@@ -54,13 +53,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Cierro el modal
+  // Cerrar modal
   closeModal.addEventListener("click", () => {
     modal.style.display = "none";
     modalOverlay.style.display = "none";
   });
 
-  // Envío del formulario
+  // Enviar formulario
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
     const dia_hora = document.querySelector(
@@ -74,21 +73,21 @@ document.addEventListener("DOMContentLoaded", () => {
       nombreAlumno: nombreAlumno,
       nombrePadre: nombrePadre,
     };
+
     try {
-      const response = await fetch("http://localhost:3000/submit_schedule", {
+      const response = await fetch("/submit_schedule", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(scheduleData),
       });
+
       if (!response.ok) {
         throw new Error("Error en la reserva");
       }
-      const result = await response.text();
-      alert("Horario reservado con éxito.");
 
-      // Cierro el modal
+      alert("Horario reservado con éxito.");
       modal.style.display = "none";
       modalOverlay.style.display = "none";
       disableBookedSlots();
@@ -96,55 +95,35 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Error al reservar el horario:", error);
     }
   });
+
+  // Detección de cambios usando Socket.IO
+  const socket = io();
+  socket.on("update", () => {
+    location.reload(); // Actualizo cuando hay cambios
+  });
+
+  // Función para verificar actualizaciones periódicamente
+  async function checkForUpdates() {
+    try {
+      const response = await fetch("/last_update_time");
+      if (response.ok) {
+        const { lastUpdate } = await response.json();
+        if (lastUpdate > lastUpdateTime) {
+          location.reload(); // Recargo la página si hay actualizaciones
+        }
+      }
+    } catch (error) {
+      console.error("Error al comprobar actualizaciones:", error);
+    }
+  }
+
+  // Verificar actualizaciones
+  const checkInterval = 5000; //5 segundos
+  let lastUpdateTime = Date.now();
+  setInterval(checkForUpdates, checkInterval);
 });
 
-// Cargo horarios disponibles
-async function loadAvailableSchedules() {
-  const response = await fetch("/get_available_schedules");
-  const availableSchedules = await response.json();
-  const scheduleDropdown = document.getElementById("scheduleDropdown");
-
-  if (scheduleDropdown) {
-    // Limpio el dropdown
-    scheduleDropdown.innerHTML = "";
-    availableSchedules.forEach((schedule) => {
-      const option = document.createElement("option");
-      option.value = schedule.dia_hora;
-      option.textContent = schedule.dia_hora;
-      scheduleDropdown.appendChild(option);
-    });
-  } else {
-    console.error("El elemento scheduleDropdown no se encontró.");
-  }
-}
-
-// Cargo horarios disponibles
-window.onload = loadAvailableSchedules;
-
-// Compruebo cambios
-const checkInterval = 5000; // 5 segundos
-
-let lastUpdateTime = Date.now();
-
-async function checkForUpdates() {
-  try {
-    const response = await fetch("/last_update_time");
-    if (response.ok) {
-      const { lastUpdate } = await response.json();
-      if (lastUpdate > lastUpdateTime) {
-        lastUpdateTime = lastUpdate;
-        location.reload();
-      }
-    }
-  } catch (error) {
-    console.error("Error al comprobar actualizaciones:", error);
-  }
-}
-
-setInterval(checkForUpdates, checkInterval);
-
-const socket = io(); // Conecto al Socket.IO
-
-socket.on("update", () => {
-  location.reload();
+// Script salida
+document.getElementById("btnSalir").addEventListener("click", () => {
+  window.location.href = "salida.html";
 });

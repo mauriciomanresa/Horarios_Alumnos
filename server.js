@@ -148,10 +148,16 @@ app.get("/admin", (req, res) => {
   }
 });
 
-// Servir el formulario HTML principal
+// Servir la página de inicio al acceder a la raíz "/"
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "public", "inicio.html"));
 });
+
+// Ruta para cargar index.html cuando se elija "Virtual"
+app.get("/virtual", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "virtual.html"));
+});
+
 
 // Inicio el servidor
 server.listen(PORT, () => {
@@ -168,3 +174,5 @@ process.on("SIGINT", () => {
     process.exit(0);
   });
 });
+
+
